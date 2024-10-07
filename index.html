@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description" content="A new Flutter project.">
+
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="firebase_signup">
+    <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png"/>
+
+    <title>firebase_signup</title>
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Import Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.9.1/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.9.1/firebase-analytics.js"></script>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+          apiKey: "AIzaSyBhL-88eV-R270qShbBSkoN0AD6K0297iA",
+  authDomain: "webmessaging-e795b.firebaseapp.com",
+  projectId: "webmessaging-e795b",
+  storageBucket: "webmessaging-e795b.appspot.com",
+  messagingSenderId: "832888617163",
+  appId: "1:832888617163:web:4db577e7c5fcd494f4434e",
+  measurementId: "G-15MN0Q3CEN"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const messaging = firebase.messaging();
+
+        // Request permission for notifications
+        messaging.requestPermission()
+            .then(() => {
+                console.log('Notification permission granted.');
+                return messaging.getToken();
+            })
+            .then((token) => {
+                console.log('FCM Token:', token);
+                // Send the token to your server or use it as needed
+            })
+            .catch((error) => {
+                console.error('Unable to get permission to notify.', error);
+            });
+
+        // Handle incoming messages
+        messaging.onMessage((payload) => {
+            console.log('Message received. ', payload);
+            // Display notification or handle as needed
+        });
+    </script>
+</head>
+
+<body>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('flutter-first-frame', function () {
+            navigator.serviceWorker.register('flutter_service_worker.js')
+                .then((registration) => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch((error) => {
+                    console.error('Service Worker registration failed:', error);
+                });
+        });
+    }
+</script>
+<script src="main.dart.js" type="application/javascript"></script>
+</body>
+
+</html>
